@@ -1,0 +1,57 @@
+---
+controller_dt: 0.01 # [s]
+att_rate: True # True= attitude rate; False = attitude
+mem_num: 5 # number of integration in feed forward.
+
+
+
+# global:
+g: 9.806 # [m/s^2]
+
+# drone configuration:
+mass: 1.2 # [kg]
+arm_length:  0.15 # [m]
+mot0_pos: [ 0.15,  -0.15]
+mot1_pos: [-0.15,  0.15]
+mot2_pos: [-0.15, -0.15]
+mot3_pos: [ 0.15,  0.15]
+inertia: #
+  - 0.007
+  - 0.007
+  - 0.010
+ctau: 0.012 # [] thrust torque coefficient
+drag: # [] linear air drag coefficient 
+  - 0.26
+  - 0.28
+  - 0.42
+   
+# constrains:
+thrust_collective_max: 68 # [N] total
+thrust_collective_min: 0.0 # [N] total
+thrust_actuator_max: 17 # [N] per motor
+thrust_actuator_min: 0.5 # [N] per motor
+max_rot_speed: # [rad/s]
+  - 6.0
+  - 6.0
+  - 3.0
+tau_mot: 0.050
+
+
+# optimizer:
+# Q_matrix: (relative importance)
+Q_position_xy: 5
+Q_position_z: 5
+Q_rotation_xy: 1.3
+Q_rotation_z: 1
+Q_velocity: 0.1
+Q_omega: 0.01
+Q_int: 0.001
+Q_thrust: 0.01
+# R_matrix: (relative importance)
+R_collective_thrust: 0.01
+R_omega_in: 0.1
+
+
+# acados settings
+ac_num_iter: 20 # [-]
+ac_horizon: 1.000 # [s]
