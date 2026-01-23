@@ -1,0 +1,5 @@
+<library path="lib/libControllerModule">
+  <class name="controller_module/ControllerModule" type="controller_module::ControllerModule" base_class_type="mrs_uav_managers::Controller">
+    <description>Controller module.</description>
+  </class>
+</library>

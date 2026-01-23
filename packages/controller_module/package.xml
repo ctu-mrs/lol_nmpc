@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<package format="2">
+
+  <name>controller_module</name>
+  <version>1.0.0</version>
+  <description>Controller module</description>
+
+  <author email="guptapar@fel.cvut.cz">Parakh M. Gupta</author>
+  <maintainer email="guptapar@fel.cvut.cz">Parakh M. Gupta</maintainer>
+
+  <license>BSD 3-Clause</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>cmake_modules</depend>
+  <depend>pluginlib</depend>
+  <depend>roscpp</depend>
+  <depend>nodelet</depend>
+  <depend>mrs_msgs</depend>
+  <depend>nav_msgs</depend>
+  <depend>mavros_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>mrs_lib</depend>
+  <depend>std_srvs</depend>
+  <depend>mrs_uav_managers</depend>
+  <depend>dynamic_reconfigure</depend>
+  <depend>message_generation</depend>
+
+  <export>
+    <mrs_uav_managers plugin="${prefix}/plugins.xml" />
+  </export>
+
+</package>
