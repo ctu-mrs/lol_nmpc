@@ -1,0 +1,597 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sdf version='1.6'>
+
+  {%- import 'mrs_robots_description/sdf/component_snippets.sdf.jinja' as components -%}
+  {%- import 'mrs_robots_description/sdf/generic_components.sdf.jinja' as generic -%}
+
+  {# ================================================================== #}
+  {# ||                    parameters definition                     || #}
+  {# ================================================================== #}
+
+  {# Robot parameters and arguments {--> #}
+  {%- set mass = 1.178 -%} {# [kg] mass without propellers #}  
+  {%- set body_radius = 0.05 -%} {# [m] #}
+  {%- set body_height = -0.1 -%} {# [m] #}
+  {%- set mass_prop = 0.008 -%} {# [kg] #}
+  {%- set radius_prop = 0.089408 -%} {# [m] #}
+
+  {%- set motor_mesh_z_offset = -0.0086 -%} {# [m] #}
+  {%- set rotor_xy_offset = 0.1 -%} {# [m] #}
+  {%- set rotor_z_offset = -0.055 -%} {# [m] #}
+
+  {%- set use_battery_mount = true -%} {# [bool] #}
+  {%- set root = "base_link" -%}
+
+  {%- set enable_motor_crash = true -%}
+  {% if disable_motor_crash %}
+    {%- set enable_motor_crash = false -%}
+  {% endif %}
+
+  {# <!--}--> #}
+
+  {# Motor constants {--> #}
+  {%- set rotor_velocity_slowdown_sim = 0.0159236 -%}
+  {%- set motor_constant = 20.21 -%} {# [kg.m/s^2] #}
+  {%- set moment_constant = 0.012 -%} {# [m] #}
+  {%- set time_constant_up = 1.0 / 20.5761 -%} {# [s] #}
+  {%- set time_constant_down = 1.0 / 18.3486 -%} {# [s] #}
+  {%- set max_rot_velocity = 1 -%} {# [rad/s] #}
+  {%- set rotor_drag_coefficient = 0.1 -%} {# orig 8.06428e-04 #}
+  {%- set rolling_moment_coefficient = "1.0e-6" -%}
+  {# <!--}--> #}
+
+  {# Inertia constants {--> #}
+  {%- set inertia_body_radius = 0.25 -%} {# [m] #}<!-- TODO: approx -->
+  {%- set inertia_body_height = 0.05 -%} {# [m] #}
+  {# <!--}--> #}
+
+  {# Meshes {--> #}
+
+  {# Frame parts {--> #}
+  {%- set frame_mesh_file = "model://a300_resources/meshes/a300/frame_mesh_file.stl" -%}
+  {%- set leg_3d_print_mesh_file = "model://a300_resources/meshes/a300/leg_3d_print_mesh_file.stl" -%}
+  {# <!--}--> #}
+
+  {# Motors and props {--> #}
+  {%- set motor_bottom_mesh_file = "model://a300_resources/meshes/a300/motor_bottom_mesh_file.stl" -%}
+  {%- set motor_middle_mesh_file = "model://a300_resources/meshes/a300/motor_middle_mesh_file.stl" -%}
+  {%- set motor_top_mesh_file = "model://a300_resources/meshes/a300/motor_top_mesh_file.stl" -%}
+  {%- set prop_mesh_file = "model://a300_resources/meshes/a300/prop_mesh_file.dae" -%}
+  {# <!--}--> #}
+
+  <!-- {# Sensors {--> #} -->
+  {%- set pixhawk6c_mesh_file  = "model://a300_resources/meshes/a300/pixhawk6c_mesh_file.stl" -%}
+  {%- set gps_mount_mesh_file  = "model://a300_resources/meshes/a300/gps_mount_mesh_file.stl" -%}
+  {# <!--}--> #}
+
+  {# Mounts {--> #}
+  <!-- {%- set battery_mesh_file = "model://a300_resources/meshes/a300/battery_mesh_file.stl" -%} -->
+  {%- set battery_mount_mesh_file = "model://a300_resources/meshes/a300/battery_mount_mesh_file.stl" -%}
+  {# <!--}--> #}
+
+  {# Scales {--> #}
+  {%- set mesh_scale = "1 1 1" -%}
+  {%- set mesh_scale_prop_ccw = "0.5 0.5 0.5" -%}
+  {%- set mesh_scale_prop_cw = "-0.5 0.5 0.5" -%}
+  {%- set mesh_scale_milimeters = "0.001 0.001 0.001" -%}
+  {# <!--}--> #}
+
+  {# <!--}--> #}
+
+  {# Inertias {--> #}
+  {%- set body_ixx = mass * (3 * inertia_body_radius * inertia_body_radius + inertia_body_height * inertia_body_height) / 12 -%}
+  {%- set body_ixy = 0 -%}
+  {%- set body_ixz = 0 -%}
+  {%- set body_iyy = mass * (3 * inertia_body_radius * inertia_body_radius + inertia_body_height * inertia_body_height) / 12 -%}
+  {%- set body_iyz = 0 -%}
+  {%- set body_izz = (mass * inertia_body_radius * inertia_body_radius) / 2 -%}
+
+  {# use measured inertia #}
+  {%- set body_ixx = 0.007 -%}
+  {%- set body_iyy = 0.007 -%}
+  {%- set body_izz = 0.010 -%}
+
+  {%- set prop_ixx = 0.0001 -%}
+  {%- set prop_ixy = 0 -%}
+  {%- set prop_ixz = 0 -%}
+  {%- set prop_iyy = 0.0001 -%}
+  {%- set prop_iyz = 0 -%}
+  {%- set prop_izz = 0.0001 -%}
+  {# <!--}--> #}
+
+  <model name="{{ spawner_args['name'] }}">
+
+    {# ================================================================== #}
+    {# ||                    bare body definitions                     || #}
+    {# ================================================================== #}
+
+    <link name="{{ root }}">
+
+      <!-- Body physics{-->
+      {{ generic.multirotor_physics_macro(
+        mass = mass,
+        body_radius = body_radius,
+        body_height = body_height,
+        rotor_velocity_slowdown_sim = rotor_velocity_slowdown_sim,
+        ixx = body_ixx,
+        ixy = body_ixy,
+        ixz = body_ixz,
+        iyy = body_iyy,
+        iyz = body_iyz,
+        izz = body_izz)
+      }}
+      <!--}-->
+
+      <!-- Body visuals {-->
+
+      <!-- Frame {-->
+      {{ generic.visual_mesh_macro(
+        name = "frame",
+        mesh_file = frame_mesh_file,
+        mesh_scale = mesh_scale_milimeters,
+        color = "DarkGrey",
+        x = 0,
+        y = 0,
+        z = 0,
+        roll = 0,
+        pitch = 0,
+        yaw = math.radians(90))
+      }}
+      <!--}-->
+
+      <!-- Legs {-->
+      {{ generic.leg_collision_offset_macro(
+        name = "leg_3d_print_front_right",
+        mesh_file = leg_3d_print_mesh_file,
+        mesh_scale = mesh_scale_milimeters,
+        color = "Black",
+        x = 0.092,
+        y = 0.10606+0.007,
+        z = 0,
+        roll = 0,
+        pitch = 0,
+        yaw = 0+0.19,
+        collision_height = 0.08,
+        collision_radius = 0.015,
+        offset_x = 0,
+        offset_y = 0,
+        offset_z = -0.115)
+      }}
+
+     {{ generic.leg_collision_offset_macro(
+        name = "leg_3d_print_front_left",
+        mesh_file = leg_3d_print_mesh_file,
+        mesh_scale = mesh_scale_milimeters,
+        color = "Black",
+        x = 0.092,
+        y = -(0.10606+0.007),
+        z = 0,
+        roll = 0,
+        pitch = 0,
+        yaw = -1.38079633,
+        collision_height = 0.08,
+        collision_radius = 0.015,
+        offset_x = 0,
+        offset_y = 0,
+        offset_z = -0.115)
+      }}
+
+      {{ generic.leg_collision_offset_macro(
+        name = "leg_3d_print_back_left",
+        mesh_file = leg_3d_print_mesh_file,
+        mesh_scale = mesh_scale_milimeters,
+        color = "Red",
+        x = -0.092,
+        y = -(0.10606+0.007),
+        z = 0,
+        roll = 0,
+        pitch = 0,
+        yaw = 3.14159266,
+        collision_height = 0.08,
+        collision_radius = 0.015,
+        offset_x = 0,
+        offset_y = 0,
+        offset_z = -0.115)
+      }}
+
+      {{ generic.leg_collision_offset_macro(
+        name = "leg_3d_print_back_right",
+        mesh_file = leg_3d_print_mesh_file,
+        mesh_scale = mesh_scale_milimeters,
+        color = "Red",
+        x = -0.092,
+        y = 0.10606+0.007,
+        z = 0,
+        roll = 0,
+        pitch = 0,
+        yaw = -4.71238899,
+        collision_height = 0.08,
+        collision_radius = 0.015,
+        offset_x = 0,
+        offset_y = 0,
+        offset_z = -0.115)
+      }}
+
+      <!--}-->
+
+      <!-- Motors {-->
+      {{ generic.visual_mesh_macro(
+        name = "motor_middle_front_right",
+        mesh_file = motor_middle_mesh_file,
+        mesh_scale = mesh_scale_milimeters,
+        color = "Black",
+        x = rotor_xy_offset - 0.005,
+        y = -(rotor_xy_offset + 0.017),
+        z = 0,
+        roll = 0,
+        pitch = 0,
+        yaw = 0)
+      }}
+
+      {{ generic.visual_mesh_macro(
+        name = "motor_middle_front_left",
+        mesh_file = motor_middle_mesh_file,
+        mesh_scale = mesh_scale_milimeters,
+        color = "Black",
+        x = -(rotor_xy_offset - 0.005),
+        y = (rotor_xy_offset + 0.017),
+        z = 0,
+        roll = 0,
+        pitch = 0,
+        yaw = 0)
+      }}
+
+      {{ generic.visual_mesh_macro(
+        name = "motor_middle_back_right",
+        mesh_file = motor_middle_mesh_file,
+        mesh_scale = mesh_scale_milimeters,
+        color = "Black",
+        x = rotor_xy_offset - 0.005,
+        y = (rotor_xy_offset + 0.017),
+        z = 0,
+        roll = 0,
+        pitch = 0,
+        yaw = 0)
+      }}
+
+      {{ generic.visual_mesh_macro(
+        name = "motor_middle_back_left",
+        mesh_file = motor_middle_mesh_file,
+        mesh_scale = mesh_scale_milimeters,
+        color = "Black",
+        x = -(rotor_xy_offset-0.005),
+        y = -(rotor_xy_offset + 0.017),
+        z = 0,
+        roll = 0,
+        pitch = 0,
+        yaw = 0)
+      }}
+
+      <!--}-->
+
+      <!-- Battery mount and battery {-->
+      {{ generic.visual_mesh_macro(
+        name = "battery_mount",
+        mesh_file = battery_mount_mesh_file,
+        mesh_scale = mesh_scale_milimeters,
+        color = "Red",
+        x = 0,
+        y = 0,
+        z = 0.001,
+        roll = 0,
+        pitch = 0,
+        yaw = math.radians(90))
+      }}
+      <!--}-->
+
+    <!--}-->
+
+    </link>
+
+    {# Propellers {--> #}
+    {%- set prop_list = [
+    {
+    'motor_number': 0,
+    'direction': 'ccw',
+    'x': rotor_xy_offset - 0.005,
+    'y': -(rotor_xy_offset + 0.017),
+    'z': rotor_z_offset,
+    'mesh_files': [prop_mesh_file, motor_top_mesh_file],
+    'mesh_scale': mesh_scale_prop_ccw,
+    'color': 'Grey'
+    },
+    {
+    'motor_number': 1,
+    'direction': 'ccw',
+    'x': -(rotor_xy_offset - 0.005),
+    'y': (rotor_xy_offset + 0.017),
+    'z': rotor_z_offset,
+    'mesh_files': [prop_mesh_file, motor_top_mesh_file],
+    'mesh_scale': mesh_scale_prop_ccw,
+    'color': 'Grey'
+    },
+    {
+    'motor_number': 2,
+    'direction': 'cw',
+    'x': rotor_xy_offset - 0.005,
+    'y': (rotor_xy_offset + 0.017),
+    'z': rotor_z_offset,
+    'mesh_files': [prop_mesh_file, motor_top_mesh_file],
+    'mesh_scale': mesh_scale_prop_cw,
+    'color': 'Grey'
+    },
+    {
+    'motor_number': 3,
+    'direction': 'cw',
+    'x': -(rotor_xy_offset - 0.005),
+    'y': -(rotor_xy_offset + 0.017),
+    'z': rotor_z_offset,
+    'mesh_files': [prop_mesh_file, motor_top_mesh_file],
+    'mesh_scale': mesh_scale_prop_cw,
+    'color': 'Grey'
+    }
+    ]
+    -%}
+    {{ components.propellers_macro(
+      prop_list = prop_list,
+      rotor_velocity_slowdown_sim = rotor_velocity_slowdown_sim,
+      motor_constant = motor_constant,
+      moment_constant = moment_constant,
+      parent = root,
+      mass = mass_prop,
+      radius = radius_prop,
+      time_constant_up = time_constant_up,
+      time_constant_down = time_constant_down,
+      max_rot_velocity = max_rot_velocity,
+      rotor_drag_coefficient = rotor_drag_coefficient,
+      rolling_moment_coefficient = rolling_moment_coefficient,
+      meshes_z_offset = 0,
+      use_mrs_plugin = true,
+      prop_ixx = prop_ixx,
+      prop_ixy = prop_ixy,
+      prop_ixz = prop_ixz,
+      prop_iyy = prop_iyy,
+      prop_iyz = prop_iyz,
+      prop_izz = prop_izz,
+      spawner_args = spawner_args)
+    }}
+    {# <!--}--> #}
+
+    <!-- Fluid_resistance {-->
+    {{ generic.gazebo_fluid_resistance_plugin_macro(
+      model_mass = mass,
+      verbose = false,
+      parent_link = root,
+      uav_body_resistance_x = 0.28,
+      uav_body_resistance_y = 0.35,
+      uav_body_resistance_z = 0.70,
+      )
+    }}
+    <!--}-->
+
+    {# ================================================================== #}
+    {# ||                compulsory sensor definitions                 || #}
+    {# ================================================================== #}
+
+    <!-- Pixhawk {-->
+    {%- set imu_topic = '/imu' -%}
+    {%- set mag_topic = '/mag' -%}
+    {%- set baro_topic = '/baro' -%}
+    {%- set lidar_topic = '/lidar' -%}
+
+    <!-- Gazebo ground truth {-->
+    {{ generic.gazebo_groundtruth_macro(
+      home_latitude = 0,
+      home_longitude = 0,
+      home_altitude = 0)
+    }}
+    <!--}-->
+
+    <!-- GPS {-->
+    {{ generic.gazebo_gps_macro(
+      gps_name = "gps0",
+      parent_link = root,
+      update_rate = 10,
+      gps_noise = true,
+      gps_xy_random_walk = 2.0,
+      gps_z_random_walk = 4.0,
+      gps_xy_noise_density = "2.0e-4",
+      gps_z_noise_density = "4.0e-4",
+      gps_vxy_noise_density = 0.2,
+      gps_vz_noise_density = 0.4,
+      x = 0,
+      y = 0,
+      z = 0,
+      roll = 0,
+      pitch = 0,
+      yaw = 0)
+    }}
+    <!--}-->
+
+    <!-- Magnetometer {-->
+    {{ generic.gazebo_magnetometer_macro(
+      pub_rate = 100,
+      noise_density = 0.0004,
+      random_walk = 0.0000064,
+      bias_correlation_time = 600,
+      mag_topic = "/mag")
+    }}
+    <!--}-->
+
+    <!-- Barometer {-->
+    {{ generic.gazebo_barometer_macro(
+      baro_topic = baro_topic,
+      pub_rate = 50,
+      baro_drift_pa_per_sec = 0)
+    }}
+    <!--}-->
+
+    <!-- Mavlink interface {-->
+    {{ generic.gazebo_mavlink_interface_macro(
+      imu_topic = imu_topic,
+      mag_topic = mag_topic,
+      baro_topic = baro_topic,
+      lidar_topic = lidar_topic,
+      mavlink_config = spawner_args['mavlink_config'])
+    }}
+    <!--}-->
+
+    <!-- IMU {-->
+    <!-- NOTE: IMU has to be last, otherwise the simulation is extremely slow! -->
+    {{ generic.gazebo_imu_macro(
+      imu_name = 'imu',
+      parent_link = root,
+      imu_topic = '/imu',
+      gyroscope_noise_density = 0.00018665,
+      gyroscope_random_walk = 0.000038785,
+      gyroscope_bias_correlation_time = 1000.0,
+      gyroscope_turn_on_bias_sigma = 0.0087,
+      accelerometer_noise_density = 0.00186,
+      accelerometer_random_walk = 0.006,
+      accelerometer_bias_correlation_time = 300.0,
+      accelerometer_turn_on_bias_sigma = 0.1960,
+      x = 0,
+      y = 0,
+      z = 0,
+      roll = 0,
+      pitch = 0,
+      yaw = 0)
+    }}
+    <!--}-->
+
+    <!--}-->
+
+    {# ================================================================== #}
+    {# ||                  optional sensor definitions                 || #}
+    {# ================================================================== #}
+
+    {# Ground truth {--> #}
+    {{ components.ground_truth_macro(
+      parent_link = root,
+      x = 0,
+      y = 0,
+      z = 0,
+      roll = 0,
+      pitch = 0,
+      yaw = 0,
+      spawner_args = spawner_args)
+    }}
+    {# <!--}--> #}
+
+    {# ======================= rangefinder sensors ====================== #}
+
+    {# Garmin {--> #}
+    {% if enable_rangefinder %}
+      {# Garmin down {--> #}
+      {{ components.garmin_down_macro(
+        parent_link = root,
+        x = 0.0,
+        y = 0.0625,
+        z = -0.009,
+        roll = 0,
+        pitch = math.radians(90),
+        yaw = math.radians(-90),
+        mount = garmin_down_mount,
+        spawner_args = spawner_args)
+      }}
+      {# <!--}--> #}
+    {% endif %}
+    {# <!--}--> #}
+
+    {# ========================== camera sensors ======================== #}
+
+    {# Realsense placements {--> #}
+
+    {# realsense front {--> #}
+    {%- set realsense_front = components.realsense_front_macro(
+      camera_name = 'front_rgbd',
+      camera_suffix='',
+      parent_link = root,
+      x = 0.07,
+      y = 0.0,
+      z = -0.05,
+      roll = 0,
+      pitch = 0,
+      yaw = 0,
+      mount = none,
+      spawner_args = spawner_args)
+    -%}
+    {{ realsense_front }}
+    {# <!--}--> #}
+
+    {# realsense up {--> #}
+    {%- set realsense_up = components.realsense_up_macro(
+      camera_name = 'up_rgbd',
+      camera_suffix='',
+      parent_link = root,
+      x = 0.086,
+      y = 0,
+      z = 0.03,
+      roll = 0,
+      pitch = -math.radians(90),
+      yaw = 0,
+      mount = none,
+      spawner_args = spawner_args)
+    -%}
+    {{ realsense_up }}
+    {# <!--}--> #}
+
+    {# realsense down {--> #}
+    {%- set realsense_down = components.realsense_down_macro(
+      camera_name = 'down_rgbd',
+      camera_suffix='',
+      parent_link = root,
+      x = 0.086,
+      y = 0,
+      z = 0.002,
+      roll = 0,
+      pitch = math.radians(90),
+      yaw = 0,
+      mount = none,
+      spawner_args = spawner_args)
+    -%}
+    {{ realsense_down }}
+    {# <!--}--> #}
+
+    {%- if realsense_front | replace('\s', '') | length != 0 or realsense_up | replace('\s', '') | length != 0 or realsense_down | replace('\s', '') | length != 0 -%}
+      {{ realsense_mount }}
+    {%- endif -%}
+
+    {# <!--}--> #}
+    
+    {# VIO placements {--> #}
+
+    {# VIO (classic) {--> #}
+    {{ components.vio_macro(
+      sensor_name = 'vio',
+      parent_link = root,
+      x = 0.107,
+      y = 0,
+      z = -0.002,
+      roll = 0,
+      pitch = -0.5235988,
+      yaw = 0,
+      mount = bluefox_mount_front,
+      spawner_args = spawner_args)
+    }}
+    {# <!--}--> #}
+
+    {# VIO down {--> #}
+    {{ components.vio_down_macro(
+      sensor_name = 'vio',
+      parent_link = root,
+      x = 0.107,
+      y = 0,
+      z = -0.002,
+      roll = 0,
+      pitch = math.radians(90),
+      yaw = 0,
+      mount = none,
+      spawner_args = spawner_args)
+    }}
+    {# <!--}--> #}
+
+    {# <!--}--> #}
+
+  </model>
+</sdf>

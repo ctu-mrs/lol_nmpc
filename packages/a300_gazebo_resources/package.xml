@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>a300_gazebo_resources</name>
+  <version>1.0.0</version>
+  <description>This package only contains gazebo files for the fast nmpc project</description>
+
+  <maintainer email="prochon4@fel.cvut.cz">Procházka Ondřej</maintainer>
+
+  <license>free of charge</license>
+
+  <author email="prochon4@fel.cvut.cz">Procházka Ondřej</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roscpp</build_depend>
+  <depend>gazebo</depend>
+  <exec_depend>gazebo_ros</exec_depend>
+
+  <export>
+    <!-- gazebo_ros_paths_plugin automatically adds these to
+      GAZEBO_PLUGIN_PATH and GAZEBO_MODEL_PATH when you do this export inside
+      the package.xml file. You can than use URIs of type model://my_package/stuff. -->
+    <gazebo_ros gazebo_model_path="${prefix}/models"/>
+    <gazebo_ros gazebo_media_path="${prefix}"/>
+  </export>
+
+</package>

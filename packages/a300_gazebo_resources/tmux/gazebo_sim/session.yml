@@ -1,0 +1,76 @@
+# do not modify these
+root: ./
+name: simulation
+socket_name: mrs
+attach: false
+tmux_options: -f /etc/ctu-mrs/tmux.conf
+# you can modify these
+pre_window: export UAV_NAME=uav1; export RUN_TYPE=simulation; export UAV_TYPE=a300
+startup_window: status
+windows:
+  - roscore:
+      layout: tiled
+      panes:
+        - roscore
+  - gazebo:
+      layout: tiled
+      panes:
+        - waitForRos; roslaunch mrs_uav_gazebo_simulation simulation.launch 
+          world_file:=`rospack find a300_gazebo_resources`/worlds/grass_plane.world
+          spawner_config:=./config/spawner_config.yaml
+          gui:=true
+        - waitForControl; gz camera -c gzclient_camera -f $UAV_NAME; history -s gz camera -c gzclient_camera -f $UAV_NAME
+  - status:
+      layout: tiled
+      panes:
+        - waitForHw; roslaunch mrs_uav_status status.launch
+  - start_csv_tracker:
+      layout: tiled
+      panes:
+        - 'history -s rosservice call /$UAV_NAME/control_manager/csv_tracker/fly_to_start \"{}\" ; history -s rosservice call /$UAV_NAME/control_manager/switch_tracker \"value: \"CsvTracker\"\"' 
+  - start_traj_tracking:
+      layout: tiled
+      panes:
+        - 'history -s rosservice call /$UAV_NAME/control_manager/start_trajectory_tracking'
+  - spawn:
+      layout: tiled
+      panes:
+        - waitForGazebo; rosservice call /mrs_drone_spawner/spawn "1 --$UAV_TYPE --mavlink_gcs_udp_port 18570 --enable-ground-truth" # --model_package a300_gazebo_resources 
+  - hw_api:
+      layout: tiled
+      panes:
+        - waitForTime; roslaunch mrs_uav_px4_api api.launch
+  - core:
+      layout: tiled
+      panes:
+        - waitForHw; roslaunch mrs_uav_core core.launch
+          platform_config:=`rospack find a300_gazebo_resources`/config/mrs_uav_system/$UAV_TYPE.yaml
+          custom_config:=./config/custom_config.yaml
+          world_config:=./config/world_config.yaml
+          network_config:=./config/network_config.yaml
+  - takeoff:
+      layout: tiled
+      panes:
+        - waitForHw; roslaunch mrs_uav_autostart automatic_start.launch custom_config:=./config/autostart_config.yaml
+        - 'waitForControl; rosservice call /$UAV_NAME/hw_api/arming 1; sleep 2; rosservice call /$UAV_NAME/hw_api/offboard' # ; sleep 1; rosservice call /$UAV_NAME/uav_manager/midair_activation {}'
+
+  - goto:
+      layout: tiled
+      panes:
+        - 'history -s rosservice call /$UAV_NAME/control_manager/goto \"goal: \[0.0, 10.0, 1.5, 0.0\]\"'
+  - rviz:
+      layout: tiled
+      panes:
+        - waitForControl; rosrun rviz rviz -d rviz.rviz
+        - waitForControl; export UAV_TYPE=x500; roslaunch mrs_rviz_plugins load_robot.launch
+        - waitForTime; waitForControl; roslaunch mrs_rviz_plugins rviz_interface.launch
+        - waitForTime; waitForControl; roslaunch controller_module rviz_republisher.launch
+        - waitForTime; waitForControl; roslaunch csv_tracker rviz_gate_visualizer.launch
+  - dynamic_reconfigure:
+      layout: even-vertical
+      panes:
+        - waitForControl; rosrun rqt_reconfigure rqt_reconfigure
+  - layout:
+      layout: tiled
+      panes:
+        - waitForControl; sleep 3; ~/.i3/layout_manager.sh ./layout.json
