@@ -1,0 +1,47 @@
+---
+
+mrs_uav_controllers:
+
+  controller_module:
+
+    nmpc:
+
+      uav_configuration:
+
+        mot0_pos: [ 0.15,  -0.15]
+        mot1_pos: [-0.15,  0.15]
+        mot2_pos: [-0.15, -0.15]
+        mot3_pos: [ 0.15,  0.15]
+        inertia: [0.007, 0.007, 0.010] # diag(xx, yy, zz)
+
+        ctau: 0.012 # [] thrust torque coefficient
+        rotor_velocity_slowdown_sim: 0.0159236
+        drag: [0.38, 0.47, 1.5] # [] linear air drag coefficient
+        # tau_mot: 0.03
+        tau_mot: 0.05
+        force_constant: 20.21
+
+        use_imu_data: false
+
+        voltage_based_thrustmap: True
+        propulsion_module_config: src/propulsion_module/scripts/motor_science/alien_a300.yaml
+
+      uav_constraints:
+
+        thrust_actuator_max: 17
+        thrust_actuator_min: 0.5
+        thrust_collective_max: 53.4
+        thrust_collective_min: 2.0
+        max_rot_speed: [6.0, 6.0, 3] # roll, pitch, yaw [rad/s]
+
+      pid:
+        kp_z: 0.14
+        ki_z: 0.03
+        kd_z: 0.0
+        max_integral_z: 1.0
+        # kp_xy: 0.050 #for tau mot 0.03
+        kp_xy: 0.060 #for tau mot 0.05
+        ki_xy: 0.0044
+        kd_xy: 0.0
+        max_integral_xy: 1.0
+
