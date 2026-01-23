@@ -131,11 +131,9 @@ target_link_libraries(TargetExampleSim
 )
 
 add_library(ControllerModule
-  src/thrust_lookup_table.cpp
   src/controller_module.cpp
   src/nmpc_acados/cpp/drone.cpp
   src/nmpc_acados/cpp/acados_wrapper.cpp
-  src/propulsion_module/src/propulsion_module.cpp
   )
 
 add_dependencies(ControllerModule
@@ -156,7 +154,6 @@ target_link_libraries(ControllerModule
   )
 
 catkin_install_python(PROGRAMS
-  scripts/chirp_generator.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
