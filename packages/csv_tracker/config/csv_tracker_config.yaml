@@ -16,11 +16,6 @@ velocity_is_heading: false
 acceleration_is_heading: false
 add_initial_position: true
 
-# FIXME: does not work now -> setting to 0
-# repeat_from_idx: 0
-# repeat_to_idx: 0
-# num_repeats: 0
-
 trajectory_time_length : 2.0 # [s] time length of the reference trajectory provided to the controller at each iteration
 
 ## --------------------------------------------------------------
