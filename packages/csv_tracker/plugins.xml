@@ -1,0 +1,5 @@
+<library path="lib/libCsvTracker">
+  <class name="mrs_uav_trackers/CsvTracker" type="mrs_uav_trackers::CsvTracker" base_class_type="mrs_uav_managers::Tracker">
+    <description>Tracker module.</description>
+  </class>
+</library>

@@ -1,0 +1,64 @@
+## 
+# Configurations file which defines which trajectory is going to be used
+# - all trajectories are stored in ../trajectories/
+# - the trajectory files are in csv format
+#   1 : Poly
+#   2 : CPC
+#   3 : PMM
+#
+# Note: only one trajectory type/file should be uncommented at a time
+
+
+## --------------------------------------------------------------
+## |                    common settings                         #
+## --------------------------------------------------------------
+velocity_is_heading: false 
+acceleration_is_heading: false
+add_initial_position: true
+
+# FIXME: does not work now -> setting to 0
+# repeat_from_idx: 0
+# repeat_to_idx: 0
+# num_repeats: 0
+
+trajectory_time_length : 2.0 # [s] time length of the reference trajectory provided to the controller at each iteration
+
+## --------------------------------------------------------------
+## |                      poly trajectory                       #
+## --------------------------------------------------------------
+
+trajectory_type: 1 
+trajectory_file: nmpc_pid/poly/poly_fig8_nodrag_2.5g.csv
+# trajectory_file: nmpc_pid/poly/poly_fig8_nodrag_3.5g.csv
+# trajectory_file: nmpc_pid/poly/poly_fig8_slanted_nodrag_2.5g.csv
+# trajectory_file: nmpc_pid/poly/poly_fig8_slanted_nodrag_3.5g.csv
+# trajectory_file: nmpc_pid/poly/poly_hypotrochoid_nodrag_2.5g.csv
+# trajectory_file: nmpc_pid/poly/poly_hypotrochoid_nodrag_3.5g.csv
+
+
+## --------------------------------------------------------------
+## |                           cpc                              #
+## --------------------------------------------------------------
+
+# trajectory_type: 2
+# trajectory_file: nmpc_pid/cpc/cpc_fig8_drag_2.5g.csv
+# trajectory_file: nmpc_pid/cpc/cpc_fig8_drag_3.5g.csv
+# trajectory_file: nmpc_pid/cpc/cpc_fig8_slanted_drag_2.5g.csv
+# trajectory_file: nmpc_pid/cpc/cpc_fig8_slanted_drag_3.5g.csv
+# trajectory_file: nmpc_pid/cpc/cpc_hypotrochoid_drag_2.5g.csv
+# trajectory_file: nmpc_pid/cpc/cpc_hypotrochoid_drag_3.5g.csv
+
+
+## --------------------------------------------------------------
+## |                           pmm                              #
+## --------------------------------------------------------------
+
+# trajectory_type: 3
+# trajectory_file: nmpc_pid/pmm/pmm_fig8_drag_2.5g.csv
+# trajectory_file: nmpc_pid/pmm/pmm_fig8_drag_3.5g.csv
+# trajectory_file: nmpc_pid/pmm/pmm_fig8_slanted_drag_2.5g.csv
+# trajectory_file: nmpc_pid/pmm/pmm_fig8_slanted_drag_3.5g.csv
+# trajectory_file: nmpc_pid/pmm/pmm_hypotrochoid_drag_2.5g.csv
+# trajectory_file: nmpc_pid/pmm/pmm_hypotrochoid_drag_3.5g.csv
+
+
