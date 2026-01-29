@@ -2,14 +2,24 @@
 
 ## Installation and Usage
 
+### Native Ubuntu 20.04 with ROS1 Noetic
+
+If you have ROS1 installed natively, you should first install `mrs-uav-system` from [here](https://github.com/ctu-mrs/mrs_uav_system).
+Then, you can follow the instruction from the `installation/native_ubuntu-20.04/README.md` folder of this repository.
+Please write to us if you face any issues.
+
+### Ubuntu 24.04 with ROS1 Noetic in MRS Apptainer
+
+This guide assumes that you do not have native ROS1 packages and you have a newer Linux (probably Ubuntu 24.04) installed.
+
 ## Paper and Citation
 
 You can read our paper at:
 
-[DOI](https://doi.org/10.1109/IROS60139.2025.11246583)
-[Arxiv](https://arxiv.org/abs/2506.02169)
+[DOI](https://doi.org/10.1109/IROS60139.2025.11246583)  
+[Arxiv](https://arxiv.org/abs/2506.02169)  
 
-You can also watch our YouTube presentation at:
+You can also watch our video presentation at:  
 [YouTube](https://www.youtube.com/watch?v=jjcKYbYfsqg)
 
 If you use this work in your research to build on it, or for comparison, or if you find it useful, please consider citing the following paper:
@@ -27,4 +37,6 @@ If you use this work in your research to build on it, or for comparison, or if y
   doi={10.1109/IROS60139.2025.11246583}}
 ```
 
+## Contact
 
+For any questions, issues, or help, please either contact [Parakh M. Gupta](http://mrs.fel.cvut.cz/members/phdstudents/parakh-gupta) or [Ondřej Procházka](http://mrs.fel.cvut.cz/members/phdstudents/ondrej-prochazka).
