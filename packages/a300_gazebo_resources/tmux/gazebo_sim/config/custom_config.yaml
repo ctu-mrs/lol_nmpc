@@ -5,10 +5,10 @@ mrs_uav_managers:
     # loaded state estimator plugins
     state_estimators: [
       "gps_baro",
-      "rtk",
+      "passthrough",
     ]
 
-    initial_state_estimator: "rtk" # will be used as the first state estimator
+    initial_state_estimator: "passthrough" # will be used as the first state estimator
     agl_height_estimator: "" # only slightly filtered height for checking min height (not used in control feedback)
 
   uav_manager:
@@ -34,7 +34,6 @@ mrs_uav_managers:
 
   control_manager:
 
-    # TODO: check names of controllers and trackers
     NmpcController:
       address: "controller_module/ControllerModule"
       namespace: "controller_module"

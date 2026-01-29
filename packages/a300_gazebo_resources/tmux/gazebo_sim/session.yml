@@ -67,9 +67,9 @@ windows:
         - waitForTime; waitForControl; roslaunch controller_module rviz_republisher.launch
         - waitForTime; waitForControl; roslaunch csv_tracker rviz_gate_visualizer.launch
   - dynamic_reconfigure:
-      layout: even-vertical
+      layout: tiled
       panes:
-        - waitForControl; rosrun rqt_reconfigure rqt_reconfigure
+        - 'history -s rosrun rqt_reconfigure rqt_reconfigure' 
   - layout:
       layout: tiled
       panes:

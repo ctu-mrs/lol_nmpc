@@ -66,30 +66,29 @@ mrs_uav_managers:
       other: "slow"
       ground_truth: "medium"
 
-  safety:
+  control_manager:
 
-    tilt_limit:
-      eland:
+    safety: # turning off MRS safety features to enable true agile flight
+
+      tilt_limit:
+        eland:
+          enabled: false
+        disarm:
+          enabled: false
+
+      tilt_error_disarm:
         enabled: false
-      disarm:
+        timeout: 0.5 # [s] # for how long the error has to be present to disarm
+
+      yaw_error_eland:
         enabled: false
 
-    tilt_error_disarm:
-      enabled: false
-      timeout: 0.5 # [s] # for how long the error has to be present to disarm
-      error_threshold: deg(20) # [rad]
+      # tracker used for emergency hover routine
+      ehover_tracker: "MpcTracker"
 
-    yaw_error_eland:
-      enabled: false
-
-    # tracker used for emergency hover routine
-    ehover_tracker: "MpcTracker"
-
-    # # controller used for safety landing (feed forward)
-    # failsafe_controller: "MpcController"
-    
-    # when the active tracker returns empty command
-    tracker_error_action: "ehover" # {eland, ehover}
-
-
+      # # controller used for safety landing (feed forward)
+      # failsafe_controller: "MpcController"
+      
+      # when the active tracker returns empty command
+      tracker_error_action: "ehover" # {eland, ehover}
     
