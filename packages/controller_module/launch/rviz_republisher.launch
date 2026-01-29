@@ -1,0 +1,9 @@
+<launch>
+  <!-- defines name of the namespace of the drone -->
+  <arg name="UAV_NAME" default="$(env UAV_NAME)" />
+
+  <group ns="$(arg UAV_NAME)">
+    <node pkg="controller_module" type="nmpc_rviz_republisher.py" name="rviz_republisher" output="screen">
+    </node>
+  </group>
+</launch>
