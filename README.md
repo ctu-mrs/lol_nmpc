@@ -25,6 +25,18 @@ The following guide assumes that you do not have native ROS1 packages and you ha
   
 **Please write to us if you face any issues.**
 
+### How to run the simulation
+
+After following the installation steps, you can run the simulation by following these steps:  
+
+- Source your workspace:
+
+  ```bash
+  source ~/catkin_ws/devel/setup.bash
+  ```
+
+- Launch the simulation by calling `start.sh` at `packages/a300_gazebo_resources/tmux/gazebo_sim/start.sh`.  
+
 ## Paper and Citation
 
 You can read our paper at:
