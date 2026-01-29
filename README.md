@@ -1,4 +1,6 @@
-# lol_nmpc
+# LoL-NMPC
+
+This repository contains the open-source implementation of our paper titled 'LoL-NMPC: Low-Level Dynamics Integration in Nonlinear Model Predictive Control for Unmanned Aerial Vehicles', presented at IROS 2025.
 
 ## Installation and Usage
 
