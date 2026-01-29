@@ -13,7 +13,6 @@ If you have ROS1 installed natively, you should:
 - Then, you should also clone and build our custom `px4_firmware` with the branch `integral_publishing` from [here](https://github.com/ctu-mrs/px4_firmware) into your workspace.
   - If you have build errors, do `pip install toml jsonschema future`.
 
-Please write to us if you face any issues.
 
 ### Ubuntu 24.04 with ROS1 Noetic in MRS Apptainer
 
@@ -22,7 +21,9 @@ The following guide assumes that you do not have native ROS1 packages and you ha
 - You should first install [MRS Apptainer](https://github.com/ctu-mrs/mrs_apptainer) by following the instructions in its README, and then follow next step here.
 - Then, you should follow the instruction from the `installation/mrs_apptainer/README.md` folder of this repository, and then follow next step here.
 - Then, you should also clone and build our custom `px4_firmware` with the branch `integral_publishing` from [here](https://github.com/ctu-mrs/px4_firmware) into your workspace.
-  - If you have build errors, do `pip install toml jsonschema future`.
+  - If you have build errors, do `pip install toml jsonschema future`.  
+  
+**Please write to us if you face any issues.**
 
 ## Paper and Citation
 
