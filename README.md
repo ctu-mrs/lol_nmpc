@@ -10,7 +10,9 @@ Please write to us if you face any issues.
 
 ### Ubuntu 24.04 with ROS1 Noetic in MRS Apptainer
 
-This guide assumes that you do not have native ROS1 packages and you have a newer Linux (probably Ubuntu 24.04) installed.
+The following guide assumes that you do not have native ROS1 packages and you have a newer Linux (probably Ubuntu 24.04) installed.  
+You should first install [MRS Apptainer](https://github.com/ctu-mrs/mrs_apptainer) by following the instructions in its README.  
+Then, you can follow the instruction from the `installation/mrs_apptainer/README.md` folder of this repository.
 
 ## Paper and Citation
 
@@ -20,6 +22,7 @@ You can read our paper at:
 [Arxiv](https://arxiv.org/abs/2506.02169)  
 
 You can also watch our video presentation at:  
+
 [YouTube](https://www.youtube.com/watch?v=jjcKYbYfsqg)
 
 If you use this work in your research to build on it, or for comparison, or if you find it useful, please consider citing the following paper:
