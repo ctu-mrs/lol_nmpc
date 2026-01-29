@@ -6,18 +6,23 @@ This repository contains the open-source implementation of our paper titled 'LoL
 
 ### Native Ubuntu 20.04 with ROS1 Noetic
 
-If you have ROS1 installed natively, you should first install `mrs-uav-system` from [here](https://github.com/ctu-mrs/mrs_uav_system).
-Then, you can follow the instruction from the `installation/native_ubuntu-20.04/README.md` folder of this repository.
-After installation, you should also clone and build our custom `px4_firmware` with the branch `integral_publishing` from [here](https://github.com/ctu-mrs/px4_firmware) into your workspace.  
+If you have ROS1 installed natively, you should:   
+
+- first install `mrs-uav-system` from [here](https://github.com/ctu-mrs/mrs_uav_system), and then come back here, and then follow next step here.
+- Then, you can follow the instruction from the `installation/native_ubuntu-20.04/README.md` folder of this repository, and then follow next step here.
+- Then, you should also clone and build our custom `px4_firmware` with the branch `integral_publishing` from [here](https://github.com/ctu-mrs/px4_firmware) into your workspace.
+  - If you have build errors, do `pip install toml jsonschema future`.
 
 Please write to us if you face any issues.
 
 ### Ubuntu 24.04 with ROS1 Noetic in MRS Apptainer
 
 The following guide assumes that you do not have native ROS1 packages and you have a newer Linux (probably Ubuntu 24.04) installed.  
-You should first install [MRS Apptainer](https://github.com/ctu-mrs/mrs_apptainer) by following the instructions in its README.  
-Then, you can follow the instruction from the `installation/mrs_apptainer/README.md` folder of this repository.
-After installation, you should also clone our custom `px4_firmware` with the branch `integral_publishing` from [here](https://github.com/ctu-mrs/px4_firmware) into your workspace.  
+
+- You should first install [MRS Apptainer](https://github.com/ctu-mrs/mrs_apptainer) by following the instructions in its README, and then follow next step here.
+- Then, you should follow the instruction from the `installation/mrs_apptainer/README.md` folder of this repository, and then follow next step here.
+- Then, you should also clone and build our custom `px4_firmware` with the branch `integral_publishing` from [here](https://github.com/ctu-mrs/px4_firmware) into your workspace.
+  - If you have build errors, do `pip install toml jsonschema future`.
 
 ## Paper and Citation
 
