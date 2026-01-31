@@ -1,4 +1,15 @@
-# LoL-NMPC
+<div align="center">
+    <h2>LoL-NMPC: Low-Level Dynamics Integration in Nonlinear Model Predictive Control for Unmanned Aerial Vehicles</h2>
+    <br>
+        <a href="https://mrs.fel.cvut.cz/members/phdstudents/parakh-gupta" target="_blank">Parakh M. Gupta</a>,
+        <a href="https://mrs.fel.cvut.cz/members/phdstudents/ondrej-prochazka" target="_blank">Ondřej Procházka</a>,
+        <a href="" target="_blank">Jan Hřebec</a>,
+        <a href="https://mrs.fel.cvut.cz/members/phdstudents/matej-novosad" target="_blank">Matej Novosad</a>,
+        <a href="https://mrs.fel.cvut.cz/members/professors/penicka" target="_blank">Robert Pěnička</a>, and
+        <a href="https://mrs.fel.cvut.cz/members/martin-saska" target="_blank">Martin Saska</a>
+</div>
+
+# 
 
 This repository contains the open-source implementation of our paper titled 'LoL-NMPC: Low-Level Dynamics Integration in Nonlinear Model Predictive Control for Unmanned Aerial Vehicles', presented at IROS 2025.
 
