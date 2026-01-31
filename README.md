@@ -14,7 +14,7 @@
                 <br>
             </h8>
         </p>
-        <a href='https://www.science.org/doi/10.1126/scirobotics.ado6187'><img src='.misc/arXiv-lol-nmpc.svg' alt='arxiv'></a>
+        <a href='https://ieeexplore.ieee.org/document/11246583'><img src='.misc/arXiv-lol-nmpc.svg' alt='arxiv'></a>
         <a href='https://www.youtube.com/watch?v=jjcKYbYfsqg'><img src='.misc/youtube.svg' alt='arxiv'></a>
     <br>
     <br>
@@ -59,16 +59,7 @@ After following the installation steps, you can run the simulation by following 
 
 - Launch the simulation by calling `start.sh` at `packages/a300_gazebo_resources/tmux/gazebo_sim/start.sh`.  
 
-## Paper and Citation
-
-You can read our paper at:
-
-[DOI](https://doi.org/10.1109/IROS60139.2025.11246583)  
-[Arxiv](https://arxiv.org/abs/2506.02169)  
-
-You can also watch our video presentation at:  
-
-[YouTube](https://www.youtube.com/watch?v=jjcKYbYfsqg)
+## Paper and Citation 
 
 If you use this work in your research to build on it, or for comparison, or if you find it useful, please consider citing the following paper:
 
