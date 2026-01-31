@@ -7,9 +7,20 @@
         <a href="https://mrs.fel.cvut.cz/members/phdstudents/matej-novosad" target="_blank">Matej Novosad</a>,
         <a href="https://mrs.fel.cvut.cz/members/professors/penicka" target="_blank">Robert Pěnička</a>, and
         <a href="https://mrs.fel.cvut.cz/members/martin-saska" target="_blank">Martin Saska</a>
+        <p>
+            <h48>
+                <br>
+               <img src='.misc/fel-mrs-logos.png' width="300" alt='MRS Lab'>
+                <br>
+            </h8>
+        </p>
+        <a href='https://www.science.org/doi/10.1126/scirobotics.ado6187'><img src='.misc/arXiv-lol-nmpc.svg' alt='arxiv'></a>
+        <a href='https://www.youtube.com/watch?v=jjcKYbYfsqg'><img src='.misc/youtube.svg' alt='arxiv'></a>
+    <br>
+    <br>
 </div>
 
-# 
+
 
 This repository contains the open-source implementation of our paper titled 'LoL-NMPC: Low-Level Dynamics Integration in Nonlinear Model Predictive Control for Unmanned Aerial Vehicles', presented at IROS 2025.
 
