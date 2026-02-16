@@ -30,9 +30,9 @@ git fetch
 git checkout v0.3.3 # checkout on exact version
 git submodule update --recursive --init # there is many submodules 
 
-## | ------------------ clone fast_nmpc ------------------ |
+## | ------------------ clone lol_nmpc ------------------ |
 
-echo "$0: Clone fast_nmpc"
+echo "$0: Clone lol_nmpc"
 
 cd ~/git
 if [ ! -d lol_nmpc ]; then
@@ -41,7 +41,6 @@ fi
 
 # update submodules
 cd ~/git/lol_nmpc
-gitman install --force
 
 ## | ------------------- prepare workspace ------------------- |
 

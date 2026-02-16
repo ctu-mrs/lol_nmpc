@@ -9,7 +9,6 @@ The instructions below expect that the repositories are cloned to folder **~/git
   - ubuntu 24.04 
     ```
     sudo apt install pipx
-    pipx install gitman
     ```
 
 
@@ -18,11 +17,11 @@ How to install NMPC inside apptainer:
     go to mrs_apptainer/scripts/create_overlay.sh
     - change the OVERLAY_SIZE=5000 # MB (this should be enough)
     - do not forgot to set OVERLAY=true in wrapper.sh
-2. do git clone, git checkout and gitman update outside of the wrapper (even acados should be updated outside of the wrapper) (not sure if this is needed if you source .ssh and install gitman inside the wrapper) this is done by the following script:
+2. do git clone and git checkout outside of the apptainer (even acados should be updated outside of the apptainer) this is done by the following script:
   ```
   01_clone_outside_apptainer.sh
   ```
-3. mount your folders to be visible in apptainer
+4. mount your folders to be visible in apptainer
 - you need to modify the mrs_apptainer/wrapper.sh script by including following lines:
   ```
   "type=bind" "/home/<your_user_name>/.ssh" "/home/$USER/.ssh"
@@ -32,7 +31,7 @@ How to install NMPC inside apptainer:
   ```
   plese note that <your_user_name> is needed for some installation in sudo mode 
 4. build acados inside the wrapper
-  - go to apptainer and run the following commands:
+  - run apptainer (./wrapper.sh) and execute the following command:
   ```
   02_install_without_sudo.sh
   ```
