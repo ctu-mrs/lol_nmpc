@@ -35,12 +35,12 @@ git submodule update --recursive --init # there is many submodules
 echo "$0: Clone fast_nmpc"
 
 cd ~/git
-if [ ! -d fast_nmpc ]; then
-  git clone git@mrs.fel.cvut.cz:agile-flight/fast_nmpc.git
+if [ ! -d lol_nmpc ]; then
+  git clone https://github.com/ctu-mrs/lol_nmpc
 fi
 
 # update submodules
-cd ~/git/fast_nmpc
+cd ~/git/lol_nmpc
 gitman install --force
 
 ## | ------------------- prepare workspace ------------------- |
@@ -53,6 +53,6 @@ cd ~/
 if [ ! -d nmpc_workspace ]; then
   mkdir -p ~/nmpc_workspace/src && cd ~/nmpc_workspace
   cd ~/nmpc_workspace/src
-  ln -s $(realpath ~/git/fast_nmpc)
+  ln -s $(realpath ~/git/lol_nmpc)
 fi
 
