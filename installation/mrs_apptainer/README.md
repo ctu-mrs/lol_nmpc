@@ -14,44 +14,52 @@ The instructions below expect that the repositories are cloned to folder **~/git
 
 How to install NMPC inside apptainer:
 1. create_overlay.sh 
-    go to mrs_apptainer/scripts/create_overlay.sh
-    - change the OVERLAY_SIZE=5000 # MB (this should be enough)
+    - go to mrs_apptainer/scripts/create_overlay.sh and modify following line:
+      - change the OVERLAY_SIZE=5000 # MB (this should be enough)
+    ```
+    ./create_overlay.sh
+    ```
     - do not forgot to set OVERLAY=true in wrapper.sh
 2. do git clone and git checkout outside of the apptainer (even acados should be updated outside of the apptainer) this is done by the following script:
+  ``` 
+  cd ~/git/lol-nmpc/installation/mrs_apptainer/
+  ./01_clone_outside_apptainer.sh
   ```
-  01_clone_outside_apptainer.sh
-  ```
-4. mount your folders to be visible in apptainer
-- you need to modify the mrs_apptainer/wrapper.sh script by including following lines:
+3. mount your folders to be visible in apptainer
+  - you need to modify the mrs_apptainer/wrapper.sh script by including following lines in `MOUNTS=(`:
   ```
   "type=bind" "/home/<your_user_name>/.ssh" "/home/$USER/.ssh"
   "type=bind" "/home/<your_user_name>/bag_files" "/home/$USER/bag_files"
   "type=bind" "/home/<your_user_name>/git" "/home/$USER/git"
   "type=bind" "/home/<your_user_name>/nmpc_workspace" "/home/$USER/nmpc_workspace"
   ```
-  plese note that <your_user_name> is needed for some installation in sudo mode 
-4. build acados inside the wrapper
-  - run apptainer (./wrapper.sh) and execute the following command:
+  - plese note that <your_user_name> is needed for some installation in sudo mode 
+4. build acados inside the apptainer
+  - run apptainer (./wrapper.sh) and execute the following commands inside the apptainer:
   ```
-  02_install_without_sudo.sh
+  cd ~/git/lol-nmpc/installation/mrs_apptainer/
+  ./02_install_without_sudo.sh
   ```
 5. install acados python template used for the nmpc:
-  - run apptainer with sudo (sudo ./wrapper) and run the following command:
+  - run apptainer with sudo (sudo ./wrapper.sh) and run the following command:
   ``` 
-  03_install_with_sudo.sh
+  cd ~/git/lol-nmpc/installation/mrs_apptainer/
+  ./03_install_with_sudo.sh
   ```
 6. setup bashrc in apptainer by running the following command:
-  - run apptainer without sudo (./wrapper) and run the following command:
+  - run apptainer without sudo (./wrapper.sh) and run the following command:
   ```
-  04_setup_apptainer.sh
+  cd ~/git/lol-nmpc/installation/mrs_apptainer/
+  ./04_setup_apptainer.sh
   ```
   - you need to include sourcing of the new workspace in .bashrc, this can be done when the apptainer is running or eventually you can modify mrs_apptainer/mount/ apptainer_bashrc.sh directly
 7. build the nmpc_workspace
-  - run apptainer without sudo (./wrapper) and build the workspace:
+  - run apptainer without sudo (./wrapper.sh) and build the workspace:
     ```
     cd /home/$USER/nmpc_workspace
     catkin build
     ```
+    - if the build is stuck for more than 10 minutes, please check the troubleshooting section below
 8. source the workspace in apptainer
   - you can do this by adding the following line to your .bashrc inside apptainer:
     ```
@@ -67,6 +75,12 @@ If you will find that something is not working please let me know and I will try
 Troubleshooting
 ---------------
 If you encounter issues during the installation or setup process, consider the following steps:
+
+- if the acados build fails, it is possible that you are missing `gmake`
+  * try to make symlink (outside of the apptainer) to gmake by running the following command:
+  ```
+  sudo ln -s /usr/bin/make /usr/bin/gmake
+  ```
 
 - acados_template can not be found == installation of acados_template was not successful
   * make sure you have run the 03_install_with_sudo.sh script inside the apptainer with sudo
