@@ -29,4 +29,12 @@ Once the image is built, start the interactive Docker container:
 ./start_docker.sh
 ```
 
+### 3. Run the simulation
+Inside the container, you need to navigate to the packgage with the simulation launch file and run it:
+
+```bash 
+roscd a300_gazebo_resources/tmux/gazebo_sim/
+./start.sh
+```
+
 
