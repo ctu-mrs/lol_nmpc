@@ -63,6 +63,12 @@ The following guide assumes that you do not have native ROS1 packages and you ha
 - Then, you should also clone and build our custom `px4_firmware` with the branch `integral_publishing` from [here](https://github.com/ctu-mrs/px4_firmware) into your workspace.
   - If you have build errors, do `pip install toml jsonschema future`.  
   
+### Docker 
+
+We also provide a Dockerfile to build a Docker image with all the dependencies installed and the simulation ready to run.
+
+- For more details on how to build and run the Docker image, please follow the instructions in the `installation/docker/README.md` 
+
 **Please write to us if you face any issues.**
 
 ### How to run the simulation
@@ -76,6 +82,8 @@ After following the installation steps, you can run the simulation by following 
   ```
 
 - Launch the simulation by calling `start.sh` at `packages/a300_gazebo_resources/tmux/gazebo_sim/start.sh`.  
+- To fly predefined trajectory you need to change the tracker to csv_tracker 
+  
 
 
 

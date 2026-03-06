@@ -15,6 +15,9 @@ The environment includes all necessary dependencies, including Acados, which is 
 
 ## Quick Start Guide
 
+### Prerequisites
+- Docker installed on your system.
+
 ### 1. Build the Docker Image
 First, build the Docker image. This will download the base image, install all dependencies, and run the Acados installation script.
 
@@ -26,6 +29,7 @@ First, build the Docker image. This will download the base image, install all de
 Once the image is built, start the interactive Docker container:
 
 ```bash 
+xhost +local:docker # Allow Docker to access the X server for GUI applications
 ./start_docker.sh
 ```
 
